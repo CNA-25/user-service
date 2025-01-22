@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from middleware import auth
 
 app = FastAPI()
 

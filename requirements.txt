@@ -2,3 +2,6 @@ fastapi[standard]
 pydantic
 python-dotenv
 pyjwt
+passlib[bcrypt]
+prisma
+asyncio
