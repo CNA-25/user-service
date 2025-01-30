@@ -9,8 +9,13 @@ datasource db {
 
 model User {
   id        Int     @id @default(autoincrement())
-  name      String
+  name      String  
   email     String   @unique
+  phone     String   @unique 
+  dob       DateTime? 
+  purchases Int?     
+  address   Json     @default("{}")  // Default JSONB
+  data      Json     @default("{}")  // Default JSONB
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
