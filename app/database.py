@@ -18,9 +18,9 @@ async def main() -> None:
         # Create a user
         user = await db.user.create(
              data={
-                'name': 'Iris',
-                'email': 'sliris@example.com',
-                'phone': '123456789',
+                'name': 'caspian',
+                'email': 'katt@example.com',
+                'phone': '1234567899',
                 'dob': '1991-11-11T00:00:00Z',  # Format is YYYY-MM-DDTHH:mm:ssZ
                 'purchases': 5,
                 # JSON objects

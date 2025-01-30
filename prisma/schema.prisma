@@ -12,7 +12,7 @@ model User {
   name      String  
   email     String   @unique
   phone     String   @unique 
-  dob       DateTime? 
+  dob       DateTime
   purchases Int?     
   address   Json     @default("{}")  // Default JSONB
   data      Json     @default("{}")  // Default JSONB

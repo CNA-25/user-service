@@ -4,7 +4,7 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "dob" TIMESTAMP(3),
+    "dob" TIMESTAMP(3) NOT NULL,
     "purchases" INTEGER,
     "address" JSONB NOT NULL DEFAULT '{}',
     "data" JSONB NOT NULL DEFAULT '{}',
