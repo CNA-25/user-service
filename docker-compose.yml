@@ -22,4 +22,4 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - MODE
-      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/sampledb
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/sampledb
