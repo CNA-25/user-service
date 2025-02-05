@@ -1,0 +1,16 @@
+@apiURL=http://localhost:8000
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SP0R2USEDHqPV7mcIK08ZAs4WtPMQ0NdMHuSD8tnWOw
+
+###
+GET {{apiURL}}/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{apiURL}}/users
+Content-Type: application/json
+
+###
+GET {{apiURL}}/users
+Content-Type: application/json
+Authorization: Beer {{token}}

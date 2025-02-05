@@ -5,3 +5,4 @@ pyjwt
 passlib[bcrypt]
 prisma
 asyncio
+python-dotenv

@@ -1,8 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, Request
 from contextlib import asynccontextmanager
-from middleware import auth
+from middleware import authorise
 from prisma import Prisma
 from pydantic import BaseModel
+
 
 app = FastAPI()
 
@@ -53,17 +54,15 @@ app = FastAPI(lifespan=lifespan)
 def read_root():
     return { "Hello": "user-service", "v": "0.1" }
 
-@app.get("/users")
-async def get_users():
-    users = await db.user.find_many()
-    return users
 
-#get all users with hardcoded placeholder data
-''' @app.get("/users")
-async def get_users():
-    return {"Users": fake_users_db} '''
+@app.get("/users")
+async def get_users(request: Request, decoded_jwt: dict = Depends(authorise)):
+    print("got to /users")
+    users = await db.user.find_many()
+    return {"Hello": decoded_jwt, "Methid": request.method, "Users":users}
 
 #create a new user (register)
 @app.post("/users")
 def create_user(user: User):
     return user
+
