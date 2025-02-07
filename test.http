@@ -1,4 +1,4 @@
-@apiURL=http://localhost:8000
+@apiURL=http://localhost:8080
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SP0R2USEDHqPV7mcIK08ZAs4WtPMQ0NdMHuSD8tnWOw
 
 ###
@@ -14,3 +14,16 @@ Content-Type: application/json
 GET {{apiURL}}/users
 Content-Type: application/json
 Authorization: Beer {{token}}
+
+###
+POST {{apiURL}}/users
+Content-Type: application/json
+
+{
+    "name": "Testperson 1",
+    "email": "testperson1@epost.com",
+    "phone": "118884455",
+    "dob": "1991-11-11T00:00:00Z",
+    "purchases": 4,
+    "updatedAt": "2025-01-30T11:50:07.975000Z"
+}

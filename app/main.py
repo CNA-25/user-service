@@ -27,6 +27,18 @@ fake_users_db = [{"name": "Anna"}, {"name": "Lisa"},
                 }
             }]
 
+
+""" class Adress(BaseModel):
+    street: str
+    zipcode: str
+    city: str
+    country: str
+
+class Data(BaseModel):
+    gender: str
+    height: str
+    weight: str
+ """
 class User(BaseModel):
     name: str
     email: str 
@@ -34,8 +46,9 @@ class User(BaseModel):
     phone: str
     dob: str
     purchases: int
-    adress: str
-    data: str 
+    #adress: Adress
+    #data: Data
+    updatedAt: str
 
 db = Prisma()
 
@@ -63,6 +76,19 @@ async def get_users(request: Request, decoded_jwt: dict = Depends(authorise)):
 
 #create a new user (register)
 @app.post("/users")
-def create_user(user: User):
-    return user
-
+async def create_user(user: User):
+    #password = encryptPassword(user.password)
+    created = await db.user.create(
+        {
+            "name": user.name,
+            "email": user.email,
+            "phone": user.phone,
+            "dob": user.dob,
+            "purchases": user.purchases,
+            #"address": {user.adress},
+            #"data": {user.data},
+            "updatedAt": user.updatedAt
+        }
+    )
+    return {"New user created": created}
+    

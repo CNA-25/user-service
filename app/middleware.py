@@ -19,10 +19,10 @@ def authorise(request: Request):
         return payload
     
     except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, error="Unauthorised")
+        raise HTTPException(status_code=401, error="Expired signature")
         
     except jwt.InvalidTokenError:
-        raise HTTPException(status_code=401, detail="Unauthorised")
+        raise HTTPException(status_code=401, detail="Invalid token")
         
     except HTTPException:
-        raise HTTPException(status_code=401, detail="Unauthorised")
+        raise HTTPException(status_code=401, detail="HTTP Exception")
