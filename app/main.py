@@ -40,6 +40,7 @@ class Data(BaseModel):
     weight: str
  """
 class User(BaseModel):
+    id: int | None = None
     name: str
     email: str 
     #password
@@ -92,3 +93,33 @@ async def create_user(user: User):
     )
     return {"New user created": created}
     
+#update user, send id in body, auth missing
+@app.patch("/users")
+async def update_user(user: User):
+    user = await db.user.update(
+        where = {
+            "id": user.id
+        },
+        data={
+            "name": user.name,
+            "email": user.email,
+            "phone": user.phone,
+            "dob": user.dob,
+            "purchases": user.purchases,
+            #"address": {user.adress},
+            #"data": {user.data},
+            "updatedAt": user.updatedAt
+        }
+    )
+    
+    return {"message": "User updated"}
+
+#delete user, endpoint according to id, auth missing
+@app.delete("/users/{id}")
+async def delete_user(id: int):
+    user = await db.user.delete(
+    where={
+        'id': id
+        } 
+    )
+    return {"message": "User deleted"} 

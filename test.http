@@ -1,4 +1,4 @@
-@apiURL=http://localhost:8000
+@apiURL=http://localhost:8080
 #utan exp @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SP0R2USEDHqPV7mcIK08ZAs4WtPMQ0NdMHuSD8tnWOw
 #med exp som är expired  @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3Mzg5NTc2NjF9.eHbNJueApPNTl7ca68qVQY8g8QnO6TO-BLcSXksS3ro
 #denna expires 19 feb
@@ -30,3 +30,21 @@ Content-Type: application/json
     "purchases": 3948,
     "updatedAt": "2025-01-30T11:50:07.975000Z"
 }
+
+###
+PATCH {{apiURL}}/users
+Content-Type: application/json 
+
+{
+    "id": "4",
+    "name": "ErikNY",
+    "email": "eriksnyaepost@erik.com",
+    "phone": "66778899",
+    "dob": "1993-01-01T00:00:00Z",
+    "purchases": 5,
+    "updatedAt": "2025-01-30T11:50:07.975000Z"
+}
+
+###
+DELETE {{apiURL}}/users/3
+Content-Type: application/json 
