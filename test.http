@@ -37,3 +37,21 @@ Content-Type: application/json
     "email": "lille.skutt@dunder.com",
     "password": "password123!"
 }
+
+###
+PATCH {{apiURL}}/users
+Content-Type: application/json 
+
+{
+    "id": "4",
+    "name": "ErikNY",
+    "email": "eriksnyaepost@erik.com",
+    "phone": "66778899",
+    "dob": "1993-01-01T00:00:00Z",
+    "purchases": 5,
+    "updatedAt": "2025-01-30T11:50:07.975000Z"
+}
+
+###
+DELETE {{apiURL}}/users/3
+Content-Type: application/json 

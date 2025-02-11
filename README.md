@@ -1,4 +1,44 @@
-# user-service
+# Available endpoints and methods
+## /users
+### GET
+Returns all users from database
+### POST
+Creates new user
+### PATCH
+Updates user, send id in body
+## /users/id
+### DELETE
+Removes users with selected id
+
+# Request content
+**GET** method requires authorization
+
+**PATCH** and **DELETE** are still missing authorization
+
+## Schema
+![alt text](userschema.png)
+
+### Example request for the post method:
+```
+{
+    "name": "Rainer Roiner",
+    "email": "rainer.roiner5@test.com",
+    "phone": "11887744235",
+    "dob": "1993-01-01T00:00:00Z",
+    "purchases": 3948,
+    "updatedAt": "2025-01-30T11:50:07.975000Z"
+}
+```
+# Responses
+**GET** returns an array of user objects
+
+**POST** returns the created user object
+
+**PATCH** returns simple "User updated" string
+
+**DELETE** returns simple "User deleted" string
+
+
 
 # To-do
 
