@@ -3,7 +3,10 @@ from contextlib import asynccontextmanager
 from middleware import authorise
 from prisma import Prisma
 from pydantic import BaseModel
+from passlib.context import CryptContext
+from login import router as login_router
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
 
@@ -11,6 +14,7 @@ fake_users_db = [{"name": "Anna"}, {"name": "Lisa"},
             {
                 'name': 'caspian',
                 'email': 'katt@example.com',
+                'password': 'password123',
                 'phone': '1234567899',
                 'dob': '1991-11-11T00:00:00Z',  
                 'purchases': 5,
@@ -42,7 +46,7 @@ class Data(BaseModel):
 class User(BaseModel):
     name: str
     email: str 
-    #password
+    password: str
     phone: str
     dob: str
     purchases: int
@@ -63,6 +67,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+app.include_router(login_router)
+
 @app.get("/")
 def read_root():
     return { "Hello": "user-service", "v": "0.1" }
@@ -78,10 +84,12 @@ async def get_users(request: Request, decoded_jwt: dict = Depends(authorise)):
 @app.post("/users")
 async def create_user(user: User):
     #password = encryptPassword(user.password)
+    hashed_password = pwd_context.hash(user.password)
     created = await db.user.create(
         {
             "name": user.name,
             "email": user.email,
+            "password": hashed_password,
             "phone": user.phone,
             "dob": user.dob,
             "purchases": user.purchases,

@@ -1,8 +1,6 @@
 @apiURL=http://localhost:8000
-#utan exp @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SP0R2USEDHqPV7mcIK08ZAs4WtPMQ0NdMHuSD8tnWOw
-#med exp som är expired  @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3Mzg5NTc2NjF9.eHbNJueApPNTl7ca68qVQY8g8QnO6TO-BLcSXksS3ro
-#denna expires 19 feb
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3Mzk5ODg2NjF9.XD1tpeWnQsuNtj7x34m0FNrEyngaQOk3IoazIdypYq8
+#get token from your .env
 
 ###
 GET {{apiURL}}/users
@@ -23,10 +21,20 @@ POST {{apiURL}}/users
 Content-Type: application/json
 
 {
-    "name": "Rainer Roiner",
-    "email": "rainer.roiner5@test.com",
-    "phone": "11887744235",
-    "dob": "1993-01-01T00:00:00Z",
-    "purchases": 3948,
-    "updatedAt": "2025-01-30T11:50:07.975000Z"
+    "name": "Lille skutt",
+    "email": "lille.skutt@dunder.com",
+    "phone": "11887432435",
+    "dob": "1998-01-01T00:00:00Z",
+    "purchases": 1,
+    "updatedAt": "2025-02-11T12:50:07.975000Z",
+    "password": "password123!"
+}
+
+###
+POST {{apiURL}}/login
+Content-Type: application/json
+
+{
+    "email": "lille.skutt@dunder.com",
+    "password": "password123!"
 }
