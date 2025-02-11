@@ -1,5 +1,6 @@
 @apiURL=http://localhost:8000
 #get token from your .env
+#@token=
 
 ###
 GET {{apiURL}}/users

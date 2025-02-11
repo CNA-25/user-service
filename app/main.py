@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, Request
 from contextlib import asynccontextmanager
 from middleware import authorise
 from prisma import Prisma
-from pydantic import BaseModel 
+from pydantic import BaseModel
 from passlib.context import CryptContext
 from login import router as login_router
 
