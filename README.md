@@ -10,6 +10,10 @@ Updates user, send id in body
 ### DELETE
 Removes users with selected id
 
+## /login
+### POST
+Recieves email and passowrd, and verifys the user, returns a JWT
+
 # Request content
 **GET** method requires authorization
 
@@ -67,5 +71,3 @@ Removes users with selected id
 
 
 ### OBS Swagger UI updates automatically and works as our documentation, so the endpoint can be tested there as well. 
-
-
