@@ -66,6 +66,20 @@ table USER
   updatedAt DateTime @updatedAt
 ```
 
+## JWT example
+```
+{
+    "sub": "1234567890", - user id
+
+    "name": "John Doe", - name of user
+
+    "email": "john.doe@example.com", - email of user
+
+    "role": "user", - role of user
+
+    "exp": 1739659869 - token expiry time (utc, since unix epoch)
+}
+```
 
 # WORKDISTRIBUTION and to-do list
 
@@ -94,3 +108,5 @@ table USER
 
 
 ## OBS Swagger UI updates automatically and works as our documentation, so the endpoint can be tested there as well. 
+
+### OBS Swagger UI updates automatically and works as our documentation, so the endpoint can be tested there as well. 
