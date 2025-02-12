@@ -6,8 +6,14 @@ COPY ./requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
+
+
 COPY ./app /code/app
 COPY ./prisma /code/prisma
+
+RUN mkdir -p /code/.cache/prisma-python/binaries && chmod -R 777 /code/.cache
+ENV PRISMA_CACHE_DIR="/code/.cache/prisma-python"
+
 
 RUN prisma generate
 #RUN prisma migrate deploy
