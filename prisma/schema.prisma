@@ -12,6 +12,7 @@ model User {
   name      String  
   password  String   @default("hashed-pass")
   email     String   @unique
+  role      String   @default("user")
   phone     String   @unique 
   dob       DateTime
   purchases Int?     
