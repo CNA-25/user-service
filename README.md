@@ -22,6 +22,27 @@ Recieves email and passowrd, and verifys the user, returns a JWT
 ## Schema
 ![alt text](userschema.png)
 
+# DATABASE
+Every user has a "user" role by default. If the role needs to be updated to "admin", it needs to be changes manually in the database. 
+Every field is mandatory, except for the number of purchases.
+Inside of address and data anyhting can be stored, amount doesn't matter. 
+- Details like gender and taste preferences can be stored in data.
+- Detials like street name nad zipcode can be stores in address
+  
+table USER
+  id        Int     @id @default(autoincrement())
+  name      String  
+  password  String   @default("hashed-pass")
+  email     String   @unique
+  role      String   @default("user")
+  phone     String   @unique 
+  dob       DateTime
+  purchases Int?     
+  address   Json     @default("{}")  
+  data      Json     @default("{}")  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
 ### Example request for the post method:
 ```
 {
