@@ -28,7 +28,8 @@ Every field is mandatory, except for the number of purchases.
 Inside of address and data anyhting can be stored, amount doesn't matter. 
 - Details like gender and taste preferences can be stored in data.
 - Detials like street name nad zipcode can be stores in address
-  
+
+```
 table USER
   id        Int     @id @default(autoincrement())
   name      String  
@@ -42,6 +43,7 @@ table USER
   data      Json     @default("{}")  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+```
 
 ### Example request for the post method:
 ```
