@@ -21,9 +21,9 @@ POST {{apiURL}}/users
 Content-Type: application/json
 
 {
-    "name": "Lille skutt",
-    "email": "lille.skutt@dunder.com",
-    "phone": "11887432435",
+    "name": "Lille skuttis",
+    "email": "lille.skuttis@dunder.com",
+    "phone": "1188723452435",
     "dob": "1998-01-01T00:00:00Z",
     "purchases": 1,
     "updatedAt": "2025-02-11T12:50:07.975000Z",

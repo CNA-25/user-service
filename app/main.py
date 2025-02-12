@@ -5,6 +5,7 @@ from prisma import Prisma
 from pydantic import BaseModel
 from passlib.context import CryptContext
 from login import router as login_router
+from utils import create_jwt
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -103,7 +104,7 @@ async def create_user(user: User):
     
 #update user, send id in body, auth missing
 @app.patch("/users")
-async def update_user(user: User):
+async def update_user(user: User, decoded_jwt: dict = Depends(authorise)):
     user = await db.user.update(
         where = {
             "id": user.id
@@ -124,7 +125,7 @@ async def update_user(user: User):
 
 #delete user, endpoint according to id, auth missing
 @app.delete("/users/{id}")
-async def delete_user(id: int):
+async def delete_user(id: int, decoded_jwt: dict = Depends(authorise)):
     user = await db.user.delete(
     where={
         'id': id
