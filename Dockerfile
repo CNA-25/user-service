@@ -13,7 +13,9 @@ COPY ./prisma /code/prisma
 
 #RUN mkdir -p /code/.cache/prisma-python/binaries && chmod -R 777 /code/.cache
 #ENV PRISMA_CACHE_DIR="/code/.cache/prisma-python"
-RUN chmod -R 777 /code/prisma
+#RUN chmod -R 777 /code/prisma
+
+RUN mkdir -p /code/.cache/prisma-python && chmod -R 777 /code/.cache/prisma-python
 
 RUN prisma generate
 #RUN prisma migrate deploy
