@@ -22,28 +22,6 @@ Recieves email and passowrd, and verifys the user, returns a JWT
 ## Schema
 ![alt text](userschema.png)
 
-# DATABASE
-Every user has a "user" role by default. If the role needs to be updated to "admin", it needs to be changes manually in the database. 
-Every field is mandatory, except for the number of purchases.
-Inside of address and data anyhting can be stored, amount doesn't matter. 
-- Details like gender and taste preferences can be stored in data.
-- Detials like street name nad zipcode can be stores in address
-
-```
-table USER
-  id        Int     @id @default(autoincrement())
-  name      String  
-  password  String   @default("hashed-pass")
-  email     String   @unique
-  role      String   @default("user")
-  phone     String   @unique 
-  dob       DateTime
-  purchases Int?     
-  address   Json     @default("{}")  
-  data      Json     @default("{}")  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-```
 
 ### Example request for the post method:
 ```
@@ -65,9 +43,31 @@ table USER
 
 **DELETE** returns simple "User deleted" string
 
+# DATABASE
+Every user has a "user" role by default. If the role needs to be updated to "admin", it needs to be changes manually in the database. 
+Every field is mandatory, except for the number of purchases.
+Inside of address and data anyhting can be stored, amount doesn't matter. 
+- Details like gender and taste preferences can be stored in **data**.
+- Details like street name nad zipcode can be stores in **address**.
+
+```
+table USER
+  id        Int     @id @default(autoincrement())
+  name      String  
+  password  String   @default("hashed-pass")
+  email     String   @unique
+  role      String   @default("user")
+  phone     String   @unique 
+  dob       DateTime
+  purchases Int?     
+  address   Json     @default("{}")  
+  data      Json     @default("{}")  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+```
 
 
-# To-do
+# WORKDISTRIBUTION and to-do list
 
 - MINERVA - fastAPI, Create login endpoint, (optionally github login)
 - ELLEN - middleware authorization jwt
@@ -93,4 +93,4 @@ table USER
 - create a test file (users.http) to test the method 
 
 
-### OBS Swagger UI updates automatically and works as our documentation, so the endpoint can be tested there as well. 
+## OBS Swagger UI updates automatically and works as our documentation, so the endpoint can be tested there as well. 
