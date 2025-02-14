@@ -6,7 +6,7 @@ COPY ./requirements.txt /code/requirements.txt
 
 #RUN apt-get update && apt-get install -y nodejs npm
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-RUN pip install nodejs-bin --no-cache-dir
+#RUN pip install nodejs-bin --no-cache-dir
 
 COPY ./app /code/app
 COPY ./prisma /code/prisma
@@ -15,7 +15,7 @@ COPY ./prisma /code/prisma
 #ENV PRISMA_CACHE_DIR="/code/.cache/prisma-python"
 #RUN chmod -R 777 /code/prisma
 
-RUN mkdir -p /code/.cache/prisma-python && chmod -R 777 /code/.cache/prisma-python
+#RUN mkdir -p /code/.cache/prisma-python && chmod -R 777 /code/.cache/prisma-python
 
 RUN prisma generate
 #RUN prisma migrate deploy
