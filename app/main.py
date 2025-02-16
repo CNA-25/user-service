@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, Request
+from fastapi import FastAPI, Depends, Request, Response, status
 from contextlib import asynccontextmanager
 from middleware import authorise
 from prisma import Prisma
@@ -77,10 +77,19 @@ def read_root():
 
 
 @app.get("/users")
-async def get_users(request: Request, decoded_jwt: dict = Depends(authorise)):
+async def get_users(request: Request, response: Response, decoded_jwt: dict = Depends(authorise)):
     print("got to /users")
-    users = await db.user.find_many()
-    return {"Hello": decoded_jwt, "Methid": request.method, "Users":users}
+    #users = await db.user.find_many()
+    try:
+        user = await db.user.find_unique(
+            where={
+                'id': int(decoded_jwt['sub']),
+        })
+    except Exception as e:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return{"error":"User not found"}
+
+    return {"User_data":user}
 
 #create a new user (register)
 @app.post("/users")
@@ -102,7 +111,7 @@ async def create_user(user: User):
     )
     return {"New user created": created}
     
-#update user, send id in body, auth missing
+#update user, send id in body
 @app.patch("/users")
 async def update_user(user: User, decoded_jwt: dict = Depends(authorise)):
     user = await db.user.update(
@@ -123,7 +132,7 @@ async def update_user(user: User, decoded_jwt: dict = Depends(authorise)):
     
     return {"message": "User updated"}
 
-#delete user, endpoint according to id, auth missing
+#delete user, endpoint according to id
 @app.delete("/users/{id}")
 async def delete_user(id: int, decoded_jwt: dict = Depends(authorise)):
     user = await db.user.delete(
