@@ -45,9 +45,8 @@ async def login(user: UserLogin):
             "name": found_user.name,
         }
 
-        #token = jwt.encode(token_data, JWT_SECRET, algorithm=ALGORITHM)
         token = create_jwt(found_user)
 
-        return {"access_token": token, "token_type": "bearer", "message": "Login endpoint is being worked on!"}
+        return {"access_token": token, "token_type": "bearer"}
     finally:
         await db.disconnect()
