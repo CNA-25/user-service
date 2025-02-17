@@ -15,7 +15,7 @@ Removes users with selected id
 Recieves email and password, then verifies the user, and returns a JWT. 
 Login POST example:
 
-'''
+```
 POST {{apiURL}}/login
 Content-Type: application/json
 
@@ -23,14 +23,14 @@ Content-Type: application/json
     "email": "user@email.com",
     "password": "password"
 }
-'''
+```
 Login response example:
-'''
+```
 {
   "access_token": "eyJhbGciOiJIUzI1NnR5cCI6IkpXVCJ9.eyJzdWIiOiIxNSIsImBza3V0dCIsImVtYWlsIjoiLmNvbSIsImV4cCI6MTc0MDAzODM1OX0.0PJz-nosI7pHkmZXkID5z41aSHEuVnpRw5EPHk",
   "token_type": "bearer"
 }
-'''
+```
 
 # Request content
 **GET** method requires authorization
