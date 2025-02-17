@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, Request, Response, status
 from contextlib import asynccontextmanager
-from middleware import authorise
+from middleware import authorise, cors
 from prisma import Prisma
 from pydantic import BaseModel
 from passlib.context import CryptContext
@@ -10,6 +10,9 @@ from utils import create_jwt
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
+
+# Använd cors
+cors(app)
 
 fake_users_db = [{"name": "Anna"}, {"name": "Lisa"}, 
             {

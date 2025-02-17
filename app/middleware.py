@@ -3,6 +3,8 @@ import passlib
 import os
 from dotenv import load_dotenv
 from fastapi import Request, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
 
 load_dotenv()
 JWT_SECRET = os.getenv('JWT_SECRET')
@@ -26,5 +28,18 @@ def authorise(request: Request):
         
     except HTTPException:
         raise HTTPException(status_code=401, detail="Unauthorised")
+    
+
+# Hit går apis spm vi tillåter
+origins = []
+
+def cors(app):
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Allow all origins
+        allow_credentials=True,
+        allow_methods=["*"],  
+        allow_headers=["*"],  
+    )
 
 
