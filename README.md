@@ -2,13 +2,38 @@
 ## /users
 ### GET
 Returns all users from database
+
+Returns an array of user objects
+
 ### POST
 Creates new user
+
+Returns the created user object
+
+#### Example request for the post method:
+```
+{
+    "name": "Rainer Roiner",
+    "email": "rainer.roiner5@test.com",
+    "password": "password123",
+    "phone": "11887744235",
+    "dob": "1993-01-01T00:00:00Z",
+    "purchases": 3948,
+    "updatedAt": "2025-01-30T11:50:07.975000Z"
+}
+```
 ### PATCH
 Updates user, send id in body
+
+Returns simple "User updated" string
+
 ## /users/id
 ### DELETE
 Removes users with selected id
+
+Returns simple "User deleted" string
+
+**GET**, **PATCH** and **DELETE** methods require authorization
 
 ## /login
 ### POST
@@ -31,36 +56,6 @@ Login response example:
   "token_type": "bearer"
 }
 ```
-
-# Request content
-**GET** method requires authorization
-
-**PATCH** and **DELETE** are still missing authorization
-
-## Schema
-![alt text](userschema.png)
-
-
-### Example request for the post method:
-```
-{
-    "name": "Rainer Roiner",
-    "email": "rainer.roiner5@test.com",
-    "phone": "11887744235",
-    "dob": "1993-01-01T00:00:00Z",
-    "purchases": 3948,
-    "updatedAt": "2025-01-30T11:50:07.975000Z"
-}
-```
-# Responses
-**GET** returns an array of user objects
-
-**POST** returns the created user object
-
-**PATCH** returns simple "User updated" string
-
-**DELETE** returns simple "User deleted" string
-
 # DATABASE
 Every user has a "user" role by default. If the role needs to be updated to "admin", it needs to be changes manually in the database. 
 Every field is mandatory, except for the number of purchases.
