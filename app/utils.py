@@ -16,6 +16,7 @@ def create_jwt(user_data: User):
         "sub": str(user_data.id),
         "name": user_data.name,
         "email": user_data.email,
+        "role": user_data.role,
         "exp": exp
     }
 

@@ -1,3 +1,4 @@
+#@apiURL=https://user-service-api-user-service.2.rahtiapp.fi
 @apiURL=http://localhost:8000
 #get token from your .env
 @token={{$dotenv TOKEN}}
@@ -21,9 +22,9 @@ POST {{apiURL}}/users
 Content-Type: application/json
 
 {
-    "name": "Lille skuttis",
-    "email": "lille.skuttis@dunder.com",
-    "phone": "1188723452435",
+    "name": "Lille skruttis",
+    "email": "lille.skruttis@dunder.com",
+    "phone": "1182723452435",
     "dob": "1998-01-01T00:00:00Z",
     "purchases": 1,
     "updatedAt": "2025-02-11T12:50:07.975000Z",
