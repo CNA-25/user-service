@@ -92,7 +92,7 @@ async def get_users(request: Request, response: Response, decoded_jwt: dict = De
         response.status_code = status.HTTP_404_NOT_FOUND
         return{"error":"User not found"}
 
-    return {"user_data":user, "token":token}
+    return {"user_data":user}
 
 #create a new user (register)
 @app.post("/users")
