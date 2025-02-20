@@ -6,13 +6,22 @@ from pydantic import BaseModel
 from passlib.context import CryptContext
 from login import router as login_router
 from utils import create_jwt
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
 
 # Använd cors
-cors(app)
+# cors(app)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi/webshop/pages/login.html"],  # Only allow your frontend (adjust if needed)
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],  # Only allow necessary methods
+    allow_headers=["Authorization", "Content-Type"],  # Restrict headers
+)
 
 fake_users_db = [{"name": "Anna"}, {"name": "Lisa"}, 
             {
