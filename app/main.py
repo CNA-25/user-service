@@ -15,11 +15,13 @@ app = FastAPI()
 
 # Använd cors
 # cors(app)
+
+# Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi/webshop/pages/login.html", "http://127.0.0.1:5500/webshop/pages/login.html", "http://127.0.0.1:5500/"], 
+    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi/webshop/pages/login.html", "https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi"], 
     allow_credentials=True,
-    allow_methods=["GET", "POST"], 
+    allow_methods=["GET", "POST", "OPTIONS"], 
     allow_headers=["Authorization", "Content-Type"], 
 )
 
