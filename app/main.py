@@ -17,10 +17,10 @@ app = FastAPI()
 # cors(app)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi/webshop/pages/login.html"],  # Only allow your frontend (adjust if needed)
+    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi/webshop/pages/login.html", "http://127.0.0.1:5500/webshop/pages/login.html", "http://127.0.0.1:5500/"], 
     allow_credentials=True,
-    allow_methods=["GET", "POST"],  # Only allow necessary methods
-    allow_headers=["Authorization", "Content-Type"],  # Restrict headers
+    allow_methods=["GET", "POST"], 
+    allow_headers=["Authorization", "Content-Type"], 
 )
 
 fake_users_db = [{"name": "Anna"}, {"name": "Lisa"}, 
