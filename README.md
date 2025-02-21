@@ -17,13 +17,11 @@ Returns the created user object
     "email": "rainer.roiner5@test.com",
     "password": "password123",
     "phone": "11887744235",
-    "dob": "1993-01-01T00:00:00Z",
-    "purchases": 3948,
-    "updatedAt": "2025-01-30T11:50:07.975000Z"
+    "dob": "1993-01-01T00:00:00Z"
 }
 ```
 ### PATCH
-Updates user, send id in body
+Updates user
 
 Returns simple "User updated" string
 
@@ -67,7 +65,7 @@ Inside of address and data anyhting can be stored, amount doesn't matter.
 table USER
   id        Int     @id @default(autoincrement())
   name      String  
-  password  String   @default("hashed-pass")
+  password  String   
   email     String   @unique
   role      String   @default("user")
   phone     String   @unique 
