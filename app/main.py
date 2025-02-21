@@ -62,13 +62,13 @@ class User(BaseModel):
     id: int | None = None
     name: str
     email: str 
-    password: str
+    password: str 
     phone: str
     dob: str
-    purchases: int
+    #purchases: int
     #adress: Adress
     #data: Data
-    updatedAt: str
+    updatedAt: str| None = None
 
 db = Prisma()
 
@@ -108,7 +108,6 @@ async def get_users(request: Request, response: Response, decoded_jwt: dict = De
 #create a new user (register)
 @app.post("/users")
 async def create_user(user: User):
-    #password = encryptPassword(user.password)
     hashed_password = pwd_context.hash(user.password)
     created = await db.user.create(
         {
@@ -125,22 +124,20 @@ async def create_user(user: User):
     )
     return {"New user created": created}
     
-#update user, send id in body
-@app.patch("/users")
-async def update_user(user: User, decoded_jwt: dict = Depends(authorise)):
+#update user
+@app.patch("/users/{id}")
+async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise)):
+    hashed_password = pwd_context.hash(user.password)
     user = await db.user.update(
         where = {
-            "id": user.id
+            "id": id
         },
         data={
             "name": user.name,
             "email": user.email,
+            "password": hashed_password,
             "phone": user.phone,
-            "dob": user.dob,
-            "purchases": user.purchases,
-            #"address": {user.adress},
-            #"data": {user.data},
-            "updatedAt": user.updatedAt
+            "dob": user.dob
         }
     )
     
