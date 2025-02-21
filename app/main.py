@@ -25,39 +25,6 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"], 
 )
 
-fake_users_db = [{"name": "Anna"}, {"name": "Lisa"}, 
-            {
-                'name': 'caspian',
-                'email': 'katt@example.com',
-                'password': 'password123',
-                'phone': '1234567899',
-                'dob': '1991-11-11T00:00:00Z',  
-                'purchases': 5,
-                'address': {
-                    "street": "123 Main St",
-                    "zipcode": "12345",
-                    "city": "yayLand",
-                    "country": "Country"
-                },
-                'data': {
-                    "gender": "female",
-                    "height": "180cm",
-                    "weight": "100kg"
-                }
-            }]
-
-
-""" class Adress(BaseModel):
-    street: str
-    zipcode: str
-    city: str
-    country: str
-
-class Data(BaseModel):
-    gender: str
-    height: str
-    weight: str
- """
 class User(BaseModel):
     id: int | None = None
     name: str
@@ -65,9 +32,6 @@ class User(BaseModel):
     password: str 
     phone: str
     dob: str
-    #purchases: int
-    #adress: Adress
-    #data: Data
     updatedAt: str| None = None
 
 db = Prisma()
@@ -115,11 +79,7 @@ async def create_user(user: User):
             "email": user.email,
             "password": hashed_password,
             "phone": user.phone,
-            "dob": user.dob,
-            "purchases": user.purchases,
-            #"address": {user.adress},
-            #"data": {user.data},
-            "updatedAt": user.updatedAt
+            "dob": user.dob
         }
     )
     return {"New user created": created}
@@ -143,7 +103,7 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
     
     return {"message": "User updated"}
 
-#delete user, endpoint according to id
+#delete user
 @app.delete("/users/{id}")
 async def delete_user(id: int, decoded_jwt: dict = Depends(authorise)):
     user = await db.user.delete(
