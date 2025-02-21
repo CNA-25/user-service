@@ -10,7 +10,7 @@ datasource db {
 model User {
   id        Int     @id @default(autoincrement())
   name      String  
-  password  String   @default("hashed-pass")
+  password  String   
   email     String   @unique
   role      String   @default("user")
   phone     String   @unique 
