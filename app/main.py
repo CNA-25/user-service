@@ -88,18 +88,36 @@ async def create_user(user: User):
 @app.patch("/users/{id}")
 async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise)):
     hashed_password = pwd_context.hash(user.password)
-    user = await db.user.update(
-        where = {
-            "id": id
-        },
-        data={
-            "name": user.name,
-            "email": user.email,
-            "password": hashed_password,
-            "phone": user.phone,
-            "dob": user.dob
-        }
-    )
+    #allow admin to update user with any id
+    if(decoded_jwt['role'] == "admin"):
+        user = await db.user.update(
+            where = {
+                "id": id
+            },
+            data={
+                "name": user.name,
+                "email": user.email,
+                "password": hashed_password,
+                "phone": user.phone,
+                "dob": user.dob
+            }
+        )
+    #users can only update their own profile
+    elif(id == int(decoded_jwt['sub'])):
+        user = await db.user.update(
+            where = {
+                "id": int(decoded_jwt['sub'])
+            },
+            data={
+                "name": user.name,
+                "email": user.email,
+                "password": hashed_password,
+                "phone": user.phone,
+                "dob": user.dob
+            }
+        )
+    else:
+        return {"message": "You are not allowed to update another users profile"}
     
     return {"message": "User updated"}
 
