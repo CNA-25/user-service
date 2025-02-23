@@ -22,16 +22,18 @@ Returns the created user object
 ```
 ### PATCH
 Updates user
+Normal user can only update themselves, admin can update anyone. 
 
 Returns simple "User updated" string
 
 ## /users/id
 ### DELETE
 Removes users with selected id
+Normal user can only delete themselves, admin can delete anyone. 
 
 Returns simple "User deleted" string
 
-**GET**, **PATCH** and **DELETE** methods require authorization
+**GET**, **PATCH** and **DELETE** methods require authorization. 
 
 ## /login
 ### POST

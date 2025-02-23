@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, Request, Response, status
+from fastapi import FastAPI, Depends, Request, Response, status, HTTPException
 from contextlib import asynccontextmanager
 from middleware import authorise, cors
 from prisma import Prisma
@@ -72,16 +72,19 @@ async def get_users(request: Request, response: Response, decoded_jwt: dict = De
 #create a new user (register)
 @app.post("/users")
 async def create_user(user: User):
-    hashed_password = pwd_context.hash(user.password)
-    created = await db.user.create(
-        {
-            "name": user.name,
-            "email": user.email,
-            "password": hashed_password,
-            "phone": user.phone,
-            "dob": user.dob
-        }
-    )
+    try:
+        hashed_password = pwd_context.hash(user.password)
+        created = await db.user.create(
+            {
+                "name": user.name,
+                "email": user.email,
+                "password": hashed_password,
+                "phone": user.phone,
+                "dob": user.dob
+            }
+        )
+    except Exception as e:
+        return {"Could not create user, error:": e}
     return {"New user created": created}
     
 #update user
@@ -117,16 +120,27 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
             }
         )
     else:
-        return {"message": "You are not allowed to update another users profile"}
+        raise HTTPException(status_code=403, detail="You are not allowed to update another users profile")
     
     return {"message": "User updated"}
 
 #delete user
 @app.delete("/users/{id}")
 async def delete_user(id: int, decoded_jwt: dict = Depends(authorise)):
-    user = await db.user.delete(
-    where={
-        'id': id
-        } 
-    )
-    return {"message": "User deleted"} 
+    #allow admin to delete user with any id
+    if(decoded_jwt['role'] == "admin"):
+        user = await db.user.delete(
+        where={
+            'id': id
+            } 
+        )
+    #users can only delete their own profile
+    elif (id == int(decoded_jwt['sub'])):
+                user = await db.user.delete(
+        where={
+            'id': int(decoded_jwt['sub'])
+            } 
+        )
+    else:
+        raise HTTPException(status_code=403, detail="You are not allowed to delete another users profile")
+    return {"message": "User deleted"}
