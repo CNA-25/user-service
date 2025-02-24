@@ -19,8 +19,7 @@ app = FastAPI()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    access_control_allow_origin=[" https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi/webshop/pages/login.html"],
-    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi/webshop/pages/login.html", "https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi"], 
+    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi"], 
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"], 
     allow_headers=["Authorization", "Content-Type"], 
