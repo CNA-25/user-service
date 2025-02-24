@@ -12,18 +12,12 @@ from fastapi.middleware.cors import CORSMiddleware
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app = FastAPI()
+#app = FastAPI(lifespan=lifespan)
 
 # Använd cors
 # cors(app)
 
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi"], 
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"], 
-    allow_headers=["Authorization", "Content-Type"], 
-)
+
 
 class User(BaseModel):
     id: int | None = None
@@ -46,6 +40,15 @@ async def lifespan(app: FastAPI):
     await db.disconnect()
 
 app = FastAPI(lifespan=lifespan)
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi"], 
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"], 
+    allow_headers=["Authorization", "Content-Type"], 
+)
 
 app.include_router(login_router)
 
