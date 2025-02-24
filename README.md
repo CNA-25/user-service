@@ -72,9 +72,8 @@ table USER
   role      String   @default("user")
   phone     String   @unique 
   dob       DateTime
-  purchases Int?     
-  address   Json     @default("{}")  
-  data      Json     @default("{}")  
+  address   Json     @default("{}")  // Default JSONB
+  data      Json     @default("{}")  // Default JSONB
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 ```
