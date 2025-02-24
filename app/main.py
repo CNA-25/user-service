@@ -45,13 +45,32 @@ def read_root():
 
 @app.get("/users")
 async def get_users(request: Request, response: Response, decoded_jwt: dict = Depends(authorise)):
+    #users = await db.user.find_many()
+    try:
+        if(decoded_jwt['role'] == 'admin'):
+            users = await db.user.find_many()
+            return {"user_data":users}
+        else:
+            return{"error": "Unauthorised"}
+    except Exception as e:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return{"error":"User not found"}
+
+@app.get("/users/{id}")
+async def get_users(id: int, request: Request, response: Response, decoded_jwt: dict = Depends(authorise)):
     print("got to /users")
     #users = await db.user.find_many()
     try:
-        user = await db.user.find_unique(
+        if(decoded_jwt['role'] == 'admin'):
+            user = await db.user.find_unique(
             where={
-                'id': int(decoded_jwt['sub']),
+                'id': id,
         })
+        else:
+            user = await db.user.find_unique(
+                where={
+                    'id': int(decoded_jwt['sub']),
+            })
     except Exception as e:
         response.status_code = status.HTTP_404_NOT_FOUND
         return{"error":"User not found"}
@@ -74,7 +93,9 @@ async def create_user(user: User):
         )
     except Exception as e:
         return {"Could not create user, error:": e}
-    return {"New user created": created}
+    token = create_jwt(created)
+    return {"message":"user created", "access_token": token, "token_type": "bearer"}
+    #return {"New user created": created}
     
 #update user
 @app.patch("/users/{id}")

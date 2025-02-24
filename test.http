@@ -18,16 +18,19 @@ Content-Type: application/json
 Authorization: Beer {{token}}
 
 ###
+GET {{apiURL}}/users/15
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
 POST {{apiURL}}/users
 Content-Type: application/json
 
 {
     "name": "Lille skruttis",
-    "email": "lille.skruttis@dunder.com",
-    "phone": "1182723452435",
+    "email": "lille.skruttiis@dunder.com",
+    "phone": "11827323252435",
     "dob": "1998-01-01T00:00:00Z",
-    "purchases": 1,
-    "updatedAt": "2025-02-11T12:50:07.975000Z",
     "password": "password123!"
 }
 
