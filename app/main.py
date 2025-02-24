@@ -11,12 +11,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-app = FastAPI()
+#app = FastAPI()
 #app = FastAPI(lifespan=lifespan)
-
-# Använd cors
-# cors(app)
-
 
 
 class User(BaseModel):
@@ -28,7 +24,10 @@ class User(BaseModel):
     dob: str
     updatedAt: str| None = None
 
+
 db = Prisma()
+
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
