@@ -30,16 +30,14 @@ def authorise(request: Request):
         raise HTTPException(status_code=401, detail="Unauthorised")
     
 
-# Hit går apis spm vi tillåter
-origins = []
+# Hit går apis som vi tillåter, o dom ska till cors nedan
+origins = ["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi"]
 
 def cors(app):
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],  # Allow all origins
+        allow_origins=origins, 
         allow_credentials=True,
-        allow_methods=["*"],  
-        allow_headers=["*"],  
+        allow_methods=["GET", "POST", "OPTIONS"], 
+        allow_headers=["Authorization", "Content-Type"], 
     )
-
-
