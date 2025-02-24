@@ -31,7 +31,10 @@ def authorise(request: Request):
     
 
 # Hit går apis som vi tillåter, o dom ska till cors nedan
-origins = ["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi"]
+origins = ["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi",
+           "https://admin-frontend-git-admin-frontend.2.rahtiapp.fi/",
+           "https://email-service-git-email-service-api.2.rahtiapp.fi/",
+           ]
 
 def cors(app):
     app.add_middleware(
