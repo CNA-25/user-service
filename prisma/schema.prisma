@@ -15,7 +15,6 @@ model User {
   role      String   @default("user")
   phone     String   @unique 
   dob       DateTime
-  purchases Int?     
   address   Json     @default("{}")  // Default JSONB
   data      Json     @default("{}")  // Default JSONB
   createdAt DateTime @default(now())
