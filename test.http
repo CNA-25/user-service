@@ -27,11 +27,11 @@ POST {{apiURL}}/users
 Content-Type: application/json
 
 {
-    "name": "Lille skruttis",
-    "email": "lille.skruttiis@dunder.com",
-    "phone": "11827323252435",
+    "name": "Lollo",
+    "email": "lollo@test.com",
+    "phone": "11827323252436",
     "dob": "1998-01-01T00:00:00Z",
-    "password": "password123!"
+    "password": "lollo123!"
 }
 
 ###
@@ -39,8 +39,8 @@ POST {{apiURL}}/login
 Content-Type: application/json
 
 {
-    "email": "lille.skutt@dunder.com",
-    "password": "password123!"
+    "email": "lollo@test.com",
+    "password": "lollo123!"
 }
 
 ###

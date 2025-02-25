@@ -2,10 +2,11 @@
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "role" TEXT NOT NULL DEFAULT 'user',
     "phone" TEXT NOT NULL,
     "dob" TIMESTAMP(3) NOT NULL,
-    "purchases" INTEGER,
     "address" JSONB NOT NULL DEFAULT '{}',
     "data" JSONB NOT NULL DEFAULT '{}',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
