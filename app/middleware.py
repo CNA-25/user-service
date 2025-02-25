@@ -35,6 +35,8 @@ origins = ["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi",
            "https://admin-frontend-git-admin-frontend.2.rahtiapp.fi/",
            "https://email-service-git-email-service-api.2.rahtiapp.fi/",
            "https://invoicing-service-git-invoicing-service.2.rahtiapp.fi/",
+           "https://users-frontend-git-cloud-native-apps-users-frontend.2.rahtiapp.fi/",
+           "https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist",
            ]
 
 def cors(app):
