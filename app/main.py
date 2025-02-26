@@ -9,8 +9,19 @@ from utils import create_jwt
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+class Address(BaseModel):
+    street: str
+    zipcode: str
+    city: str
+    country: str
+
+class Data(BaseModel):
+    gender: str
+    height: str
+    weight: str
 class User(BaseModel):
     id: int | None = None
     name: str
@@ -18,8 +29,8 @@ class User(BaseModel):
     password: str 
     phone: str
     dob: str
-    address: dict
-    data: dict
+    address: Address = None
+    data: Data = None
     updatedAt: str| None = None
 
 db = Prisma()
@@ -91,8 +102,8 @@ async def create_user(user: User):
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": user.address | None,
-                "data": user.data | None
+                "address": user.address or {},
+                "data": user.data or {}
             }
         )
     except Exception as e:
@@ -117,8 +128,8 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": user.address | None,
-                "data": user.data | None
+                "address": user.address or {},
+                "data": user.data or {}
             }
         )
     #users can only update their own profile
@@ -133,8 +144,8 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": user.address | None,
-                "data": user.data | None
+                "address": user.address or {},
+                "data": user.data or {}
             }
         )
     else:
