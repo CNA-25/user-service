@@ -1,5 +1,5 @@
-@apiURL=https://user-service-api-user-service.2.rahtiapp.fi
-#@apiURL=http://localhost:8000
+#@apiURL=https://user-service-api-user-service.2.rahtiapp.fi
+@apiURL=http://localhost:8000
 #get token from your .env
 @token={{$dotenv TOKEN}}
 

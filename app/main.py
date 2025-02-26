@@ -12,16 +12,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-class Address(BaseModel):
-    street: str
-    zipcode: str
-    city: str
-    country: str
+#class Address(BaseModel):
+#    street: str
+#    zipcode: str
+#    city: str
+#    country: str
 
-class Data(BaseModel):
-    gender: str
-    height: str
-    weight: str
+#class Data(BaseModel):
+#    gender: str
+#    height: str
+#    weight: str
+
 class User(BaseModel):
     id: int | None = None
     name: str
@@ -29,8 +30,10 @@ class User(BaseModel):
     password: str 
     phone: str
     dob: str
-    address: Address = None
-    data: Data = None
+    address: dict
+    data: dict
+    #address: Address = None
+    #data: Data = None
     updatedAt: str| None = None
 
 db = Prisma()
@@ -94,7 +97,11 @@ async def get_users(id: int, request: Request, response: Response, decoded_jwt: 
 @app.post("/users")
 async def create_user(user: User):
     try:
+        import json
+        print("Received User Data:", json.dumps(user.dict(), indent=4))
+
         hashed_password = pwd_context.hash(user.password)
+        print("owoowowow")
         created = await db.user.create(
             data = {
                 "name": user.name,
@@ -102,12 +109,12 @@ async def create_user(user: User):
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": user.address or {},
-                "data": user.data or {}
+                "address": json.dumps(user.address) or {},
+                "data": json.dumps(user.data) or {}
             }
         )
     except Exception as e:
-        return {"Could not create user, error:": e}
+        return {"Could not create user, error:": repr(e)}
     token = create_jwt(created)
     return {"message":"user created", "access_token": token, "token_type": "bearer"}
     #return {"New user created": created}
