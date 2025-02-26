@@ -18,6 +18,8 @@ class User(BaseModel):
     password: str 
     phone: str
     dob: str
+    address: dict
+    data: dict
     updatedAt: str| None = None
 
 db = Prisma()
@@ -88,7 +90,9 @@ async def create_user(user: User):
                 "email": user.email,
                 "password": hashed_password,
                 "phone": user.phone,
-                "dob": user.dob
+                "dob": user.dob,
+                "address": user.address | None,
+                "data": user.data | None
             }
         )
     except Exception as e:
@@ -112,7 +116,9 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
                 "email": user.email,
                 "password": hashed_password,
                 "phone": user.phone,
-                "dob": user.dob
+                "dob": user.dob,
+                "address": user.address | None,
+                "data": user.data | None
             }
         )
     #users can only update their own profile
@@ -126,7 +132,9 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
                 "email": user.email,
                 "password": hashed_password,
                 "phone": user.phone,
-                "dob": user.dob
+                "dob": user.dob,
+                "address": user.address | None,
+                "data": user.data | None
             }
         )
     else:

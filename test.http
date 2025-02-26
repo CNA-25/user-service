@@ -1,5 +1,5 @@
-#@apiURL=https://user-service-api-user-service.2.rahtiapp.fi
-@apiURL=http://localhost:8000
+@apiURL=https://user-service-api-user-service.2.rahtiapp.fi
+#@apiURL=http://localhost:8000
 #get token from your .env
 @token={{$dotenv TOKEN}}
 
@@ -27,11 +27,21 @@ POST {{apiURL}}/users
 Content-Type: application/json
 
 {
-    "name": "Lollo",
-    "email": "lollo@test.com",
-    "phone": "11827323252436",
+    "name": "Lobbi",
+    "email": "lobbi@test.com",
+    "phone": "11827323252439",
     "dob": "1998-01-01T00:00:00Z",
-    "password": "lollo123!"
+    "password": "Lobbi123!",
+    "address": {
+            "street": "123 Main St",
+            "zipcode": "12345",
+            "city": "yayLand", 
+            "country": "Country"
+            },
+    "data": {
+            "gender": "female",
+            "height": "180cm",
+            "weight": "100kg"}
 }
 
 ###
@@ -39,8 +49,8 @@ POST {{apiURL}}/login
 Content-Type: application/json
 
 {
-    "email": "lollo@test.com",
-    "password": "lollo123!"
+    "email": "admin@test.com",
+    "password": "admin123!"
 }
 
 ###
