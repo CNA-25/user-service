@@ -8,20 +8,10 @@ from login import router as login_router
 from utils import create_jwt
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-#class Address(BaseModel):
-#    street: str
-#    zipcode: str
-#    city: str
-#    country: str
-
-#class Data(BaseModel):
-#    gender: str
-#    height: str
-#    weight: str
 
 class User(BaseModel):
     id: int | None = None
@@ -32,8 +22,6 @@ class User(BaseModel):
     dob: str
     address: dict
     data: dict
-    #address: Address = None
-    #data: Data = None
     updatedAt: str| None = None
 
 db = Prisma()
@@ -97,8 +85,6 @@ async def get_users(id: int, request: Request, response: Response, decoded_jwt: 
 @app.post("/users")
 async def create_user(user: User):
     try:
-        import json
-        #print("Received User Data:", json.dumps(user.dict(), indent=4))
         hashed_password = pwd_context.hash(user.password)
         created = await db.user.create(
             data = {
@@ -107,8 +93,8 @@ async def create_user(user: User):
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": json.dumps(user.address),
-                "data": json.dumps(user.data)
+                "address": json.dumps(user.address) if user.address else "{}",
+                "data": json.dumps(user.data) if user.data else "{}"
             }
         )
     except Exception as e:
@@ -134,8 +120,8 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": user.address or {},
-                "data": user.data or {}
+                "address": json.dumps(user.address) if user.address else "{}",
+                "data": json.dumps(user.data) if user.data else "{}"
             }
         )
     #users can only update their own profile
@@ -150,8 +136,8 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": user.address or {},
-                "data": user.data or {}
+                "address": json.dumps(user.address) if user.address else "{}",
+                "data": json.dumps(user.data) if user.data else "{}"
             }
         )
     else:
