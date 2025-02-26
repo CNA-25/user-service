@@ -27,11 +27,11 @@ POST {{apiURL}}/users
 Content-Type: application/json
 
 {
-    "name": "Aobbi",
-    "email": "aobbi@test.com",
-    "phone": "1182732325243",
+    "name": "Aokjhbgkjbbi",
+    "email": "aomhbbi@test.com",
+    "phone": "11827532325243",
     "dob": "1998-01-01T00:00:00Z",
-    "password": "Aobbi123!",
+    "password": "uytdyrsterzfdxcgh!",
     "address": {
             "street": "123 Main St",
             "zipcode": "12345",
