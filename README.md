@@ -9,8 +9,34 @@ Returns an array of user objects
 Creates new user
 
 Returns the created user object
+The data and address fields always have to be sent, either with information or as empty dictionaries.
 
 #### Example request for the post method:
+
+###### Option 1
+Data and Adress can be anything you want it to be
+```
+{
+    "name": "Rainer Roiner",
+    "email": "rainer.roiner5@test.com",
+    "password": "password123",
+    "phone": "11887744235",
+    "dob": "1993-01-01T00:00:00Z"
+    "address": {
+          "street": "123 Main St",
+          "zipcode": "12345",
+          "city": "yayLand",
+          "country": "Country"
+    },
+    "data": {
+          "gender": "female",
+          "height": "180cm",
+          "weight": "100kg"
+    }
+}
+```
+
+###### Option 2
 ```
 {
     "name": "Rainer Roiner",
@@ -87,39 +113,10 @@ table USER
 
     "email": "john.doe@example.com", - email of user
 
-    "role": "user", - role of user
+    "role": "user", - role of user (user or admin)
 
     "exp": 1739659869 - token expiry time (utc, since unix epoch)
 }
 ```
-
-
-# WORKDISTRIBUTION and to-do list
-
-- MINERVA - fastAPI, Create login endpoint, (optionally github login)
-- ELLEN - middleware authorization jwt
-- IRIS - db connection och prisma schema, env (kan sättas i rahi2     users-service-api) (db, genetrator och model user) 
-- SUSANNA - fastApi, Create Reigster endpoint, keep track on documentation (optinally med github)
-- Everybody assignes their own issues (and puts them to main board) 
-
-### Create a "Users" table in DB (id [unique, automatic], names [String], email [unique String], adress [String], hashed pass [String] created at [timestamp] etc.)
-- create and define the User schema in Prisma 
-- migrate it
-
-### Connect the DB through Prisma 
-- Set up Prisma in FastAPI (database.py or so)
-- add the startup and shutoff events in main (db conection calls)
-
-### Environment 
-- Everyone creates an .env file (with db url, jwt secret etc.)
-    - We can start with a shared one? e.g sample.env (without sensitive values)
-
-### Create endpoint (POST /login)
-- verify user 
-- return JWT on login (pyJWT) (authorization in middleware folder)
-- create a test file (users.http) to test the method 
-
-
-## OBS Swagger UI updates automatically and works as our documentation, so the endpoint can be tested there as well. 
 
 ### OBS Swagger UI updates automatically and works as our documentation, so the endpoint can be tested there as well. 
