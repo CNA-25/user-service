@@ -98,10 +98,8 @@ async def get_users(id: int, request: Request, response: Response, decoded_jwt: 
 async def create_user(user: User):
     try:
         import json
-        print("Received User Data:", json.dumps(user.dict(), indent=4))
-
+        #print("Received User Data:", json.dumps(user.dict(), indent=4))
         hashed_password = pwd_context.hash(user.password)
-        print("owoowowow")
         created = await db.user.create(
             data = {
                 "name": user.name,
@@ -109,11 +107,12 @@ async def create_user(user: User):
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": json.dumps(user.address) or {},
-                "data": json.dumps(user.data) or {}
+                "address": json.dumps(user.address),
+                "data": json.dumps(user.data)
             }
         )
     except Exception as e:
+        print(e)
         return {"Could not create user, error:": repr(e)}
     token = create_jwt(created)
     return {"message":"user created", "access_token": token, "token_type": "bearer"}
