@@ -96,7 +96,7 @@ async def create_user(user: User):
     try:
         hashed_password = pwd_context.hash(user.password)
         created = await db.user.create(
-            {
+            data = {
                 "name": user.name,
                 "email": user.email,
                 "password": hashed_password,
