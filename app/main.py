@@ -20,8 +20,8 @@ class User(BaseModel):
     password: str 
     phone: str
     dob: str
-    address: dict
-    data: dict
+    address: dict = {}
+    data: dict = {}
     updatedAt: str| None = None
 
 db = Prisma()
@@ -93,8 +93,8 @@ async def create_user(user: User):
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": json.dumps(user.address) if user.address else "{}",
-                "data": json.dumps(user.data) if user.data else "{}"
+                "address": json.dumps(user.address),
+                "data": json.dumps(user.data)
             }
         )
     except Exception as e:
@@ -120,8 +120,8 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": json.dumps(user.address) if user.address else "{}",
-                "data": json.dumps(user.data) if user.data else "{}"
+                "address": json.dumps(user.address),
+                "data": json.dumps(user.data)
             }
         )
     #users can only update their own profile
@@ -136,8 +136,8 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
                 "password": hashed_password,
                 "phone": user.phone,
                 "dob": user.dob,
-                "address": json.dumps(user.address) if user.address else "{}",
-                "data": json.dumps(user.data) if user.data else "{}"
+                "address": json.dumps(user.address),
+                "data": json.dumps(user.data)
             }
         )
     else:
