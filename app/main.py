@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, Request, Response, status, HTTPException
+from fastapi import FastAPI, Depends, Request, Response, HTTPException
 from contextlib import asynccontextmanager
 from middleware import authorise, cors
 from prisma import Prisma
@@ -6,8 +6,6 @@ from pydantic import BaseModel
 from passlib.context import CryptContext
 from login import router as login_router
 from utils import create_jwt
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 import json
 
 
@@ -46,10 +44,9 @@ app.include_router(login_router)
 def read_root():
     return { "Hello": "user-service", "v": "0.1" }
 
-
+#get all users, only admin is authorised
 @app.get("/users")
 async def get_users(request: Request, response: Response, decoded_jwt: dict = Depends(authorise)):
-    #users = await db.user.find_many()
     try:
         if(decoded_jwt['role'] == 'admin'):
             users = await db.user.find_many()
@@ -57,13 +54,12 @@ async def get_users(request: Request, response: Response, decoded_jwt: dict = De
         else:
             return{"error": "Unauthorised"}
     except Exception as e:
-        response.status_code = status.HTTP_404_NOT_FOUND
-        return{"error":"User not found"}
+        raise HTTPException(status_code=404, detail="User not found")
 
+#get a specific user based on id
+#admin can fetch anyone, user only themselves
 @app.get("/users/{id}")
 async def get_users(id: int, request: Request, response: Response, decoded_jwt: dict = Depends(authorise)):
-    print("got to /users")
-    #users = await db.user.find_many()
     try:
         if(decoded_jwt['role'] == 'admin'):
             user = await db.user.find_unique(
@@ -75,9 +71,11 @@ async def get_users(id: int, request: Request, response: Response, decoded_jwt: 
                 where={
                     'id': int(decoded_jwt['sub']),
             })
+        if user is None:
+            raise Exception
+    
     except Exception as e:
-        response.status_code = status.HTTP_404_NOT_FOUND
-        return{"error":"User not found"}
+        raise HTTPException(status_code=404, detail="User not found")
 
     return {"user_data":user}
 
@@ -99,7 +97,8 @@ async def create_user(user: User):
         )
     except Exception as e:
         print(e)
-        return {"Could not create user, error:": repr(e)}
+        raise HTTPException(status_code=409, detail="Unable to create user")
+        #return {"Could not create user, error:": repr(e)}
     token = create_jwt(created)
     return {"message":"user created", "access_token": token, "token_type": "bearer"}
     #return {"New user created": created}
@@ -149,19 +148,27 @@ async def update_user(id: int, user: User, decoded_jwt: dict = Depends(authorise
 @app.delete("/users/{id}")
 async def delete_user(id: int, decoded_jwt: dict = Depends(authorise)):
     #allow admin to delete user with any id
-    if(decoded_jwt['role'] == "admin"):
-        user = await db.user.delete(
-        where={
-            'id': id
-            } 
-        )
-    #users can only delete their own profile
-    elif (id == int(decoded_jwt['sub'])):
-                user = await db.user.delete(
-        where={
-            'id': int(decoded_jwt['sub'])
-            } 
-        )
-    else:
-        raise HTTPException(status_code=403, detail="You are not allowed to delete another users profile")
-    return {"message": "User deleted"}
+    try:
+        if(decoded_jwt['role'] == "admin"):
+            user = await db.user.delete(
+            where={
+                'id': id
+                } 
+            )
+        #users can only delete their own profile
+        elif (id == int(decoded_jwt['sub'])):
+                    user = await db.user.delete(
+            where={
+                'id': int(decoded_jwt['sub'])
+                } 
+            )
+        else:
+            raise HTTPException(status_code=403, detail="You are not allowed to delete another users profile")
+        
+        if user is None:
+            raise Exception
+        return {"message": "User deleted"}
+    
+    except Exception as e:
+            raise HTTPException(status_code=404, detail="User not found")
+    

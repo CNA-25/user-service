@@ -11,6 +11,7 @@ JWT_SECRET = os.getenv('JWT_SECRET')
 ALGORITHM = os.getenv('ALGORITHM')
 TOKEN_EXPIRY = os.getenv('TOKEN_EXPIRY')
 
+#validate jwt and return decoded userdata
 def authorise(request: Request):
     try:
         header = request.headers.get('Authorization') or None
@@ -41,6 +42,7 @@ origins = ["https://store-frontend-git-cna-25-store-frontend.2.rahtiapp.fi",
            "https://newsletter-service-git-newsletter-service.2.rahtiapp.fi/",
            ]
 
+#CORS policy
 def cors(app):
     app.add_middleware(
         CORSMiddleware,

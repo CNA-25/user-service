@@ -1,7 +1,7 @@
 import jwt
 import os
 from dotenv import load_dotenv
-import time, datetime
+import datetime
 from datetime import timezone
 from prisma.models import User
 
@@ -10,6 +10,7 @@ JWT_SECRET = os.getenv('JWT_SECRET')
 ALGORITHM = os.getenv('ALGORITHM')
 TOKEN_EXPIRY = os.getenv('TOKEN_EXPIRY')
 
+#create jwt token
 def create_jwt(user_data: User):
     exp = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(hours=int(TOKEN_EXPIRY))
     payload = {

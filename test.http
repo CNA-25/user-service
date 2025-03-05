@@ -1,5 +1,5 @@
-@apiURL=https://user-service-api-user-service.2.rahtiapp.fi
-#@apiURL=http://localhost:8000
+#@apiURL=https://user-service-api-user-service.2.rahtiapp.fi
+@apiURL=http://localhost:8000
 #get token from your .env
 @token={{$dotenv TOKEN}}
 
@@ -19,6 +19,11 @@ Authorization: Beer {{token}}
 
 ###
 GET {{apiURL}}/users/15
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+GET {{apiURL}}/users/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -46,12 +51,33 @@ Content-Type: application/json
 }
 
 ###
+POST {{apiURL}}/users
+Content-Type: application/json
+
+{
+    "name": "örk",
+    "email": "örk@example.com",
+    "phone": "135411243",
+    "dob": "1998-01-01T00:00:00Z",
+    "password": "örk"
+}
+
+###
 POST {{apiURL}}/login
 Content-Type: application/json
 
 {
     "email": "admin@test.com",
     "password": "admin123!"
+}
+
+###
+POST {{apiURL}}/login
+Content-Type: application/json
+
+{
+    "email": "tee@example.com",
+    "password": "tee"
 }
 
 ###
@@ -69,5 +95,6 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{apiURL}}/users/3
-Content-Type: application/json 
+DELETE {{apiURL}}/users/9
+Content-Type: application/json
+Authorization: Bearer {{token}}
